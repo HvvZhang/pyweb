@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+import os
 # Scrapy settings for pyweb project
 #
 # For simplicity, this file contains only settings considered important or
@@ -19,7 +19,7 @@ NEWSPIDER_MODULE = 'pyweb.spiders'
 #USER_AGENT = 'pyweb (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -64,9 +64,21 @@ ROBOTSTXT_OBEY = True
 
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'pyweb.pipelines.PywebPipeline': 300,
-#}
+ITEM_PIPELINES = {
+    # 自己写的
+    'pyweb.pipelines.ArticleImagePipeline': 1,
+    'pyweb.pipelines.JsonWithEncodingPipeline': 2,
+    # 自带的下载图片
+    # 'scrapy.pipelines.images.ImagesPipeline': 1
+
+}
+IMAGES_URLS_FIELD = "front_image_url"
+project_dir = os.path.abspath(os.path.dirname(__file__))
+IMAGES_STORE = os.path.join(project_dir,"images")
+
+# 下载图片过滤
+# IMAGES_MIN_HEIGHT = 100
+# IMAGES_MIN_WIDTH = 100
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
