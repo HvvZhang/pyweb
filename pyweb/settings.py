@@ -66,8 +66,12 @@ ROBOTSTXT_OBEY = False
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
     # 自己写的
-    'pyweb.pipelines.ArticleImagePipeline': 1,
-    'pyweb.pipelines.JsonWithEncodingPipeline': 2,
+    #'pyweb.pipelines.ArticleImagePipeline': 1,
+    #'pyweb.pipelines.JsonWithEncodingPipeline': 2,
+    #'pyweb.pipelines.MysqlPipeline':1
+    'pyweb.pipelines.MysqlTwistedPipline':1
+
+
     # 自带的下载图片
     # 'scrapy.pipelines.images.ImagesPipeline': 1
 
@@ -100,3 +104,8 @@ IMAGES_STORE = os.path.join(project_dir,"images")
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+MYSQL_HOST = "127.0.0.1"
+MYSQL_DBNAME = "jobbole"
+MYSQL_USER = "root"
+MYSQL_PASSWORD = "mysql123456"
