@@ -32,8 +32,7 @@ class MysqlPipeline(object):
         """
         self.cursor.execute(insert_sql, (
             item["title"], item["create_time"], item["url"], item["url_object_id"], item["comment_nums"],
-            item["fav_nums"],
-            item["praise_nums"], item["tags"], item["content"]))
+            item["fav_nums"], item["praise_nums"], item["tags"], item["content"]))
         self.conn.commit()
 
 # 支持关系数据库异步，适用于爬取速度大于插入数据库速度
@@ -94,7 +93,8 @@ class JsonWithEncodingPipeline(object):
 class ArticleImagePipeline(ImagesPipeline):
     # 重载item_completed,得到实际下载地址
     def item_completed(self, results, item, info):
-        for ok, value in results:
-            image_file_path = value["path"]
-        item["front_image_path"] = image_file_path
+        if "front_image_url" in item:
+            for ok, value in results:
+                image_file_path = value["path"]
+            item["front_image_path"] = image_file_path
         return item
